@@ -117,6 +117,7 @@ class Usuario
 		}
 	}
 
+	// Metodo par aalterar um usuario no banco
 	public function update($login, $password)
 	{
 		$this->setDeslogin($login);
@@ -128,6 +129,20 @@ class Usuario
 			':PASSWORD'=>$this->getDesdenha(),
 			':ID'=>$this->getIdusuario()
 		));
+	}
+
+	// Metodo para excluir um usuario no banco
+	public function delete () 
+	{
+		$sql = new Sql();
+		$sql->query("DELETE FROM tb_usuarios WHERE idusuario = :ID", array(
+			':ID'=>$this->getIdusuario()
+		));
+
+		$this->setIdusuario(0);
+		$this->setDeslogin("");
+		$this->setDesdenha("");
+		$this->setDtcadastro(new DateTime());
 	}
 
 	// Metodo construtor
