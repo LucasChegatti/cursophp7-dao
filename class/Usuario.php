@@ -117,6 +117,19 @@ class Usuario
 		}
 	}
 
+	public function update($login, $password)
+	{
+		$this->setDeslogin($login);
+		$this->setDesdenha($password);
+
+		$sql = new Sql();
+		$sql->query("UPDATE tb_usuarios SET deslogin = :LOGIN, desdenha = :PASSWORD WHERE idusuario = :ID", array(
+			':LOGIN'=>$this->getDeslogin(),
+			':PASSWORD'=>$this->getDesdenha(),
+			':ID'=>$this->getIdusuario()
+		));
+	}
+
 	// Metodo construtor
 	public function __construct ($login = "", $password = "") 
 	{

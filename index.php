@@ -20,8 +20,15 @@ require_once("config.php");
 // $usuario->login("root", "123456");
 // echo var_dump($usuario);
 
-$aluno = new Usuario("teste", "teste");
-$aluno->insert();
-echo $aluno;
+// Insere usuario
+// $aluno = new Usuario("teste", "teste");
+// $aluno->insert();
+// echo $aluno;
+
+// Update usuario
+$usuario = new Usuario();
+$usuario->loadById(8);
+$usuario->update("update", "update");
+echo $usuario;
 
 ?>
