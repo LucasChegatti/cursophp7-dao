@@ -16,8 +16,12 @@ require_once("config.php");
 // echo var_dump($search);
 
 // Carrega usuario por login e senha
-$usuario = new Usuario();
-$usuario->login("root", "123456");
-echo var_dump($usuario);
+// $usuario = new Usuario();
+// $usuario->login("root", "123456");
+// echo var_dump($usuario);
+
+$aluno = new Usuario("teste", "teste");
+$aluno->insert();
+echo $aluno;
 
 ?>

@@ -57,11 +57,7 @@ class Usuario
 		));
 
 		if (count($results) > 0) {
-			$row = $results[0];
-			$this->setIdusuario($row['idusuario']);
-			$this->setDeslogin($row['deslogin']);
-			$this->setDesdenha($row['desdenha']);
-			$this->setDtcadastro($row['dtcadastro']);
+			$this->setData($results[0]);
 		}
 	}
 
@@ -82,6 +78,7 @@ class Usuario
 		));
 	}
 
+	// Carrega o usuario pelo login e senha
 	public function login($login, $password) {
 		$sql = new Sql();
 
@@ -91,14 +88,40 @@ class Usuario
 		));
 
 		if (count($results) > 0) {
-			$row = $results[0];
-			$this->setIdusuario($row['idusuario']);
-			$this->setDeslogin($row['deslogin']);
-			$this->setDesdenha($row['desdenha']);
-			$this->setDtcadastro($row['dtcadastro']);
+			$this->setData($results[0]);
 		} else {
 			throw new Exception("Login ou senha incorrretos");
 		}
+	}
+
+	// Seta as propriedades da classe
+	public function setData($data)
+	{
+		$this->setIdusuario($data['idusuario']);
+		$this->setDeslogin($data['deslogin']);
+		$this->setDesdenha($data['desdenha']);
+		$this->setDtcadastro($data['dtcadastro']);
+	}
+
+	// Metodo para inserir um usuario no banco
+	public function insert ()
+	{
+		$sql = new Sql();
+		$results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
+			':LOGIN'=>$this->getDeslogin(),
+			':PASSWORD'=>$this->getDesdenha()
+		));
+
+		if (count($results) > 0) {
+			$this->setData($results[0]);
+		}
+	}
+
+	// Metodo construtor
+	public function __construct ($login = "", $password = "") 
+	{
+		$this->setDeslogin($login);
+		$this->setDesdenha($password);
 	}
 
 	public function __toString ()
